@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+<meta charset="UTF-8">
+<script language="JavaScript">
+window.a = false;
+function showftype(elem)
+{
+	if(elem.selectedIndex==1)
+		{
+		document.getElementById("ftype").removeAttribute("hidden");
+		window.a = true;
+		}
+}
+
+function showInput(){
+
+var name =  document.getElementById("name").value;
+var year =  document.getElementById("Year").value;
+var mil  =  document.getElementById("mileage").value;
+var list =  document.getElementById("list").value;
+var fuel = document.getElementById("ftype").value;
+
+
+function Vehicle(n,ye,m,l)
+{
+	this.n = n;
+	this.ye = ye;
+	this.m = m;
+	this.l = l;
+}
+
+
+
+Vehicle.prototype.gas = function()
+{
+document.getElementById('display1').innerHTML = name;
+document.getElementById('display2').innerHTML = year;
+document.getElementById('display3').innerHTML = mil;
+document.getElementById('display4').innerHTML = list;
+document.getElementById('display5').innerHTML = fuel;
+document.getElementById("form").reset();
+}
+	
+function twoWheeler(n,ye,m,l)
+{
+	Vehicle.call(this,n,ye,m,l);
+}
+
+var fourWheeler = function(n,ye,m,l,fuel)
+{
+	Vehicle.call(this,n,ye,m,l);
+	this.fuel = fuel;
+}
+
+
+fourWheeler.prototype = Vehicle.prototype;
+fourWheeler.prototype.constructor = Vehicle;
+
+twoWheeler.prototype = Vehicle.prototype;
+twoWheeler.prototype.constructor = Vehicle;
+
+
+Vehicle.prototype.info = function(){
+document.getElementById('display1').innerHTML = name;
+document.getElementById('display2').innerHTML = year;
+document.getElementById('display3').innerHTML = mil;
+document.getElementById('display4').innerHTML = list;
+document.getElementById("form").reset();
+}
+
+if(window.a==false)
+{
+	var a = new twoWheeler(name,year,mileage,list);
+	a.info();
+}
+else
+{
+	var a = new twoWheeler(name,year,mileage,list,fuel);
+	a.gas();
+}
+
+
+}
+</script>
+</head>
+
+ <body>
+
+<fieldset name="Vehicle Form">
+<form id="form">
+	<br><br>
+<input type="text" id="name" placeholder="Name"> <br><br>
+<input type="text" id="Year" placeholder="year"> <br><br>
+<input type="text" id="mileage" placeholder="Mileage"> <br><br>
+
+<select id="list" onchange="showftype(this)">
+<option> Vehicle type </option>
+<option value="Four Wheeler"> Four Wheeler </option>
+<option value = "Two Wheeler"> Two wheeler </option>
+</select>
+
+<select id="ftype" hidden>
+<option> Fuel Type </option>
+<option value="CNG"> CNG </option>
+<option value = "Petrol"> ptrol </option>
+
+</select>
+</form>
+</fieldset>
+</br>
+
+<input type="submit" onclick="showInput();" >
+
+<p><span id='display1'></span> </p>
+<p><span id='display2'></span> </p>
+<p><span id='display3'></span> </p>
+<p><span id='display4'></span> </p>
+<p><span id='display5'></span> </p>
+
+</body>
+</html>
